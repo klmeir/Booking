@@ -4,6 +4,7 @@ namespace Booking.Domain.Ports
 {
     public interface IHotelRepository
     {
-        Task<Hotel> SaveXml(Hotel hotel);
+        Task<Hotel> SaveHotel(Hotel h);
+        Task<Hotel> SingleHotel(int id);
     }
 }
