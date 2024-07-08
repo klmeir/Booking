@@ -18,6 +18,7 @@ namespace Booking.Infrastructure.DataSource.ModelConfig
             builder.Property(b => b.Taxes).IsRequired();
             builder.Property(b => b.RoomType).IsRequired();
             builder.Property(b => b.Location).IsRequired();
+            builder.Property(b => b.IsActive).IsRequired();
 
             builder
                 .HasMany(h => h.Reservations)
