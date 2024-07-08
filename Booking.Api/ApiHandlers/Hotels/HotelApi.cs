@@ -1,9 +1,9 @@
 ﻿using Booking.Api.Filters;
-using Booking.Application.Persons;
-using Booking.Domain.Entities;
+using Booking.Application.Hotels;
+using Booking.Domain.Dtos;
 using MediatR;
 
-namespace Booking.Api.ApiHandlers
+namespace Booking.Api.ApiHandlers.Hotels
 {
     public static class HotelApi
     {
@@ -13,7 +13,7 @@ namespace Booking.Api.ApiHandlers
             {
                 return Results.Ok(await mediator.Send(hotel));
             })
-            .Produces(StatusCodes.Status200OK, typeof(Hotel));
+            .Produces(StatusCodes.Status200OK, typeof(HotelDto));
 
             return (RouteGroupBuilder)routeHandler;
         }

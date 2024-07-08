@@ -3,7 +3,7 @@ using Booking.Domain.Entities;
 using Booking.Domain.Services;
 using MediatR;
 
-namespace Booking.Application.Persons
+namespace Booking.Application.Hotels
 {
     public class HotelAddCommandHandler : IRequestHandler<HotelAddCommand, HotelDto>
     {

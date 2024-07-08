@@ -1,5 +1,5 @@
-
-using Booking.Api.ApiHandlers;
+using Booking.Api.ApiHandlers.Hotels;
+using Booking.Api.ApiHandlers.Rooms;
 using Booking.Api.Filters;
 using Booking.Api.Middleware;
 using Booking.Infrastructure.DataSource;
@@ -62,6 +62,7 @@ namespace Booking.Api
                 app.UseMiddleware<AppExceptionHandlerMiddleware>();
 
                 app.MapGroup("/api/hotels").MapHotels().AddEndpointFilterFactory(ValidationFilter.ValidationFilterFactory);
+                app.MapGroup("/api/rooms").MapRooms().AddEndpointFilterFactory(ValidationFilter.ValidationFilterFactory);
 
                 app.Run();
 

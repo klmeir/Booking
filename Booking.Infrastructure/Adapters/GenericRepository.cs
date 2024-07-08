@@ -62,7 +62,7 @@ namespace Booking.Infrastructure.Adapters
 
         public async Task<T> GetOneAsync(int id)
         {
-            return await _dataset.FindAsync(id) ?? throw new ArgumentNullException(nameof(id));
+            return await _dataset.FindAsync(id);
 
         }
 

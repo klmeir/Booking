@@ -9,6 +9,7 @@ namespace Booking.Domain.Entities
         public decimal Taxes { get; set; }
         public RoomTypeEnum RoomType { get; set; }
         public string Location { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
@@ -19,6 +20,7 @@ namespace Booking.Domain.Entities
             Taxes = taxes;
             RoomType = roomType;
             Location = location;
+            IsActive = true;
         }
     }
 }
