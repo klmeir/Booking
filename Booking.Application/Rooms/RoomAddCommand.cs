@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Booking.Application.Rooms
 {
-    public record RoomAddCommand(int HotelId, decimal BaseCost, decimal Taxes, RoomTypeEnum RoomType, string Location) : IRequest<RoomDto>;
+    public record RoomAddCommand(int HotelId, decimal BaseCost, decimal Taxes, RoomTypeEnum RoomType, int MaxGuests, string Location) : IRequest<RoomDto>;
 }

@@ -16,7 +16,7 @@ namespace Booking.Application.Hotels
         {
             var room = await _service.SingleRoomAsync(request.Id, cancellationToken);
 
-            return new RoomDto(room.Id, room.HotelId, room.BaseCost, room.Taxes, room.RoomType, room.RoomType.ToString(), room.Location, room.IsActive);
+            return new RoomDto(room.Id, room.HotelId, room.BaseCost, room.Taxes, room.RoomType, room.RoomType.ToString(), room.MaxGuests, room.Location, room.IsActive);
         }
     }
 }

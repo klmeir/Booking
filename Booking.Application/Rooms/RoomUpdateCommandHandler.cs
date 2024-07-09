@@ -16,11 +16,11 @@ namespace Booking.Application.Rooms
         {         
             var room = await _service.SingleRoomAsync(request.Id, cancellationToken);
 
-            room.Update(request.HotelId, request.BaseCost, request.Taxes, request.RoomType, request.Location, request.IsActive);
+            room.Update(request.HotelId, request.BaseCost, request.Taxes, request.RoomType, request.MaxGuests, request.Location, request.IsActive);
 
             await _service.UpdateRoomAsync(room, cancellationToken);
 
-            return new RoomDto(room.Id, room.HotelId, room.BaseCost, room.Taxes, room.RoomType, room.RoomType.ToString(), room.Location, room.IsActive);
+            return new RoomDto(room.Id, room.HotelId, room.BaseCost, room.Taxes, room.RoomType, room.RoomType.ToString(), room.MaxGuests, room.Location, room.IsActive);
         }
     }
 }
