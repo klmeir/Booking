@@ -1,4 +1,5 @@
 ﻿using Booking.Domain.Entities;
+using Booking.Domain.Exception;
 using Booking.Domain.Ports;
 
 namespace Booking.Domain.Services
@@ -22,6 +23,13 @@ namespace Booking.Domain.Services
             var returnRoom = await _roomRepository.SaveRoom(r);
             await _unitOfWork.SaveAsync(token);
             return returnRoom;
+        }
+
+        public async Task<Room> SingleRoomAsync(int id, CancellationToken? cancellationToken = null)
+        {
+            var token = cancellationToken ?? new CancellationTokenSource().Token;
+
+            return await _roomRepository.SingleRoom(id) ?? throw new NotFoundException("The specified room could not be found"); ;
         }
     }
 }
