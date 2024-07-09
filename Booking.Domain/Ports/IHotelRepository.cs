@@ -6,5 +6,6 @@ namespace Booking.Domain.Ports
     {
         Task<Hotel> SaveHotel(Hotel h);
         Task<Hotel> SingleHotel(int id);
+        Task UpdateHotel(Hotel h);
     }
 }

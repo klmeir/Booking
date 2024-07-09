@@ -16,6 +16,6 @@ namespace Booking.Infrastructure.Adapters
 
         public async Task<Hotel> SingleHotel(int id) => await _dataSource.GetOneAsync(id);
 
-
+        public async Task UpdateHotel(Hotel h) => _dataSource.UpdateAsync(h);
     }
 }

@@ -35,5 +35,14 @@ namespace Booking.Domain.Services
             if (hotel is null)
                 throw new CoreBusinessException("The specified hotel could not be found");
         }
+
+        public async Task<Hotel> UpdateHotelAsync(Hotel h, CancellationToken? cancellationToken = null)
+        {
+            var token = cancellationToken ?? new CancellationTokenSource().Token;
+            await _hotelRepository.UpdateHotel(h);
+            await _unitOfWork.SaveAsync(token);
+
+            return h;
+        }
     }
 }

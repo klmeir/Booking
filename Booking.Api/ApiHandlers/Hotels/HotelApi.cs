@@ -25,6 +25,14 @@ namespace Booking.Api.ApiHandlers.Hotels
             .Produces(StatusCodes.Status201Created, typeof(HotelDto))
             .Produces(StatusCodes.Status400BadRequest);
 
+            routeHandler.MapPut("/{id}", async (IMediator mediator, int id, [Validate] HotelUpdateCommand hotel) =>
+            {
+                if (id != hotel.Id) return Results.BadRequest();
+                return Results.Ok(await mediator.Send(hotel));
+            })
+            .Produces(StatusCodes.Status200OK, typeof(HotelDto))
+            .Produces(StatusCodes.Status400BadRequest);
+
             return (RouteGroupBuilder)routeHandler;
         }
     }
