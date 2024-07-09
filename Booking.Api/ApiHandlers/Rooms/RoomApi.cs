@@ -25,6 +25,14 @@ namespace Booking.Api.ApiHandlers.Rooms
             })
             .Produces(StatusCodes.Status200OK, typeof(RoomDto));
 
+            routeHandler.MapPut("/{id}", async (IMediator mediator, int id, [Validate] RoomUpdateCommand room) =>
+            {
+                if (id != room.Id) return Results.BadRequest();
+                return Results.Ok(await mediator.Send(room));
+            })
+            .Produces(StatusCodes.Status200OK, typeof(RoomDto))
+            .Produces(StatusCodes.Status400BadRequest);
+
             return (RouteGroupBuilder)routeHandler;
         }
     }

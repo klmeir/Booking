@@ -22,5 +22,16 @@ namespace Booking.Domain.Entities
             Location = location;
             IsActive = true;
         }
+
+        public Room Update(int? hotelId, decimal? baseCost, decimal? taxes, RoomTypeEnum? roomType, string? location, bool isActive)
+        {
+            if (hotelId is not null && HotelId != hotelId) HotelId = hotelId.Value;
+            if (baseCost is not null && BaseCost != baseCost) BaseCost = baseCost.Value;
+            if (taxes is not null && Taxes != taxes) Taxes = taxes.Value;
+            if (roomType is not null && RoomType != roomType) RoomType = roomType.Value;
+            if (location is not null && Location?.Equals(location) is not true) Location = location;
+            if (isActive != IsActive) IsActive = isActive;
+            return this;
+        }
     }
 }
