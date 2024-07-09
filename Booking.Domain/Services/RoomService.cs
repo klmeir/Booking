@@ -31,5 +31,14 @@ namespace Booking.Domain.Services
 
             return await _roomRepository.SingleRoom(id) ?? throw new NotFoundException("The specified room could not be found"); ;
         }
+
+        public async Task<Room> UpdateRoomAsync(Room r, CancellationToken? cancellationToken = null)
+        {
+            var token = cancellationToken ?? new CancellationTokenSource().Token;
+            await _roomRepository.UpdateRoom(r);
+            await _unitOfWork.SaveAsync(token);
+
+            return r;
+        }
     }
 }

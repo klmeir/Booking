@@ -6,5 +6,6 @@ namespace Booking.Domain.Ports
     {
         Task<Room> SaveRoom(Room r);
         Task<Room> SingleRoom(int id);
+        Task UpdateRoom(Room r);
     }
 }

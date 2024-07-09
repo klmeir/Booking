@@ -16,6 +16,6 @@ namespace Booking.Infrastructure.Adapters
 
         public async Task<Room> SingleRoom(int id) => await _dataSource.GetOneAsync(id);
 
-
+        public async Task UpdateRoom(Room r) => _dataSource.UpdateAsync(r);
     }
 }
