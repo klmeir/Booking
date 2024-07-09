@@ -25,7 +25,7 @@ namespace Booking.Domain.Services
         {
             var token = cancellationToken ?? new CancellationTokenSource().Token;
 
-            return await _hotelRepository.SingleHotel(id);
+            return await _hotelRepository.SingleHotel(id) ?? throw new NotFoundException("The specified hotel could not be found"); ;
         }
 
         public async Task CheckIfExistsHotelAsync(int id, CancellationToken? cancellationToken = null)

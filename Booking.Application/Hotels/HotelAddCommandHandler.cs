@@ -16,8 +16,8 @@ namespace Booking.Application.Hotels
         public async Task<HotelDto> Handle(HotelAddCommand request, CancellationToken cancellationToken)
         {
             var hotelSaved = await _service.SaveHotelAsync(
-            new Hotel(request.Name, request.Description, request.City, request.Address, request.Commission), cancellationToken
-        );
+                new Hotel(request.Name, request.Description, request.City, request.Address, request.Commission), cancellationToken
+            );
 
             return new HotelDto(hotelSaved.Id, hotelSaved.Name, hotelSaved.Description, hotelSaved.City, hotelSaved.Address, hotelSaved.Commission, hotelSaved.IsActive);
         }

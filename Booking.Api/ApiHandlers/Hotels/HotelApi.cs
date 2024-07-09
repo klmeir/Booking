@@ -9,11 +9,22 @@ namespace Booking.Api.ApiHandlers.Hotels
     {
         public static RouteGroupBuilder MapHotels(this IEndpointRouteBuilder routeHandler)
         {
-            routeHandler.MapPost("/", async (IMediator mediator, [Validate] HotelAddCommand hotel) =>
+            routeHandler.MapGet("/{id}", async (IMediator mediator, int id) =>
             {
-                return Results.Ok(await mediator.Send(hotel));
+                return Results.Ok(await mediator.Send(new HotelQuery(id)));
             })
-            .Produces(StatusCodes.Status200OK, typeof(HotelDto));
+            .WithName("GetHotel")
+            .Produces(StatusCodes.Status200OK, typeof(HotelDto))
+            .Produces(StatusCodes.Status404NotFound);
+
+            routeHandler.MapPost("/", async (IMediator mediator, [Validate] HotelAddCommand hotel) =>
+            {                
+                //return Results.Ok(await mediator.Send(hotel));
+                var savedHotel = await mediator.Send(hotel);
+                return Results.CreatedAtRoute("GetHotel", new { id = savedHotel.Id }, savedHotel);                
+            })
+            .Produces(StatusCodes.Status201Created, typeof(HotelDto))
+            .Produces(StatusCodes.Status400BadRequest);
 
             return (RouteGroupBuilder)routeHandler;
         }
