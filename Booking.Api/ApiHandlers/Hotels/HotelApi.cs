@@ -18,8 +18,7 @@ namespace Booking.Api.ApiHandlers.Hotels
             .Produces(StatusCodes.Status404NotFound);
 
             routeHandler.MapPost("/", async (IMediator mediator, [Validate] HotelAddCommand hotel) =>
-            {                
-                //return Results.Ok(await mediator.Send(hotel));
+            {                                
                 var savedHotel = await mediator.Send(hotel);
                 return Results.CreatedAtRoute("GetHotel", new { id = savedHotel.Id }, savedHotel);                
             })
