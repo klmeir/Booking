@@ -1,7 +1,9 @@
-﻿using Booking.Domain.Ports;
+﻿using Booking.Application.Ports;
+using Booking.Domain.Ports;
 using Booking.Domain.Services;
 using Booking.Infrastructure.Adapters;
 using Booking.Infrastructure.Ports;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Booking.Infrastructure.Extensions
@@ -47,6 +49,14 @@ namespace Booking.Infrastructure.Extensions
                 Type iface = repo.GetInterfaces().Single();
                 services.AddTransient(iface, repo);
             }
+
+            return services;
+        }
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {            
+            // Email Service            
+            services.AddTransient<IEmailService, SmtpEmailService>();
 
             return services;
         }
