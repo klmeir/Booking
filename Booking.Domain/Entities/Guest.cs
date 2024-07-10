@@ -6,14 +6,14 @@ namespace Booking.Domain.Entities
     {
         public int ReservationId { get; set; }
         public string Name { get; set; }
-        public DateTime Birthdate { get; set; }
+        public DateOnly Birthdate { get; set; }
         public GenderEnum Gender { get; set; }
         public DocumentTypeEnum DocumentType { get; set; }
         public string DocumentNumber { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }        
         
-        public Guest(string name, DateTime birthdate, GenderEnum gender, DocumentTypeEnum documentType, string documentNumber, string email, string phone)
+        public Guest(string name, DateOnly birthdate, GenderEnum gender, DocumentTypeEnum documentType, string documentNumber, string email, string phone)
         {
             Name = name;
             Birthdate = birthdate;
