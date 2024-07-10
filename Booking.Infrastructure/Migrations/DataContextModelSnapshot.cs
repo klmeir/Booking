@@ -188,26 +188,32 @@ namespace Booking.Infrastructure.Migrations
 
             modelBuilder.Entity("Booking.Domain.Entities.Reservation", b =>
                 {
-                    b.HasOne("Booking.Domain.Entities.Hotel", null)
+                    b.HasOne("Booking.Domain.Entities.Hotel", "Hotel")
                         .WithMany("Reservations")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Booking.Domain.Entities.Room", null)
+                    b.HasOne("Booking.Domain.Entities.Room", "Room")
                         .WithMany("Reservations")
-                        .HasForeignKey("HotelId")
+                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Hotel");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Booking.Domain.Entities.Room", b =>
                 {
-                    b.HasOne("Booking.Domain.Entities.Hotel", null)
+                    b.HasOne("Booking.Domain.Entities.Hotel", "Hotel")
                         .WithMany("Rooms")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Hotel");
                 });
 
             modelBuilder.Entity("Booking.Domain.Entities.Hotel", b =>
