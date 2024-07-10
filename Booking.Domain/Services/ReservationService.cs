@@ -1,6 +1,7 @@
 ﻿using Booking.Domain.Entities;
 using Booking.Domain.Exception;
 using Booking.Domain.Ports;
+using System.Linq.Expressions;
 
 namespace Booking.Domain.Services
 {
@@ -30,7 +31,7 @@ namespace Booking.Domain.Services
         {
             var token = cancellationToken ?? new CancellationTokenSource().Token;
 
-            return await _reservationRepository.SingleReservation(id) ?? throw new NotFoundException("The specified reservation could not be found"); ;
+            return await _reservationRepository.SingleReservation(id) ?? throw new NotFoundException("The specified reservation could not be found");
         }
 
         public async Task<Reservation> UpdateReservationAsync(Reservation r, CancellationToken? cancellationToken = null)
@@ -49,6 +50,13 @@ namespace Booking.Domain.Services
         {
             await _hotelService.CheckIfExistsHotelAsync(r.HotelId, cancellationToken);
             await _roomService.CheckIfExistsRoomAsync(r.RoomId, cancellationToken);
+            await CheckAvailability(r);
+        }
+
+        public async Task CheckAvailability(Reservation r)
+        {
+            Expression<Func<Reservation, bool>> filter = x => x.RoomId == r.RoomId && x.CheckInDate <= r.CheckOutDate && x.CheckOutDate >= r.CheckInDate;
+            if (!await _reservationRepository.CheckAvailability(filter)) throw new CoreBusinessException("The specified room is not available in that date range");
         }
     }
 }

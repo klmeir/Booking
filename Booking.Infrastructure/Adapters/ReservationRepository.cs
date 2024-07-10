@@ -1,6 +1,7 @@
 ﻿using Booking.Domain.Entities;
 using Booking.Domain.Ports;
 using Booking.Infrastructure.Ports;
+using System.Linq.Expressions;
 
 namespace Booking.Infrastructure.Adapters
 {
@@ -22,5 +23,12 @@ namespace Booking.Infrastructure.Adapters
         }
 
         public async Task UpdateReservation(Reservation r) => _dataSource.UpdateAsync(r);
+
+        public async Task<bool> CheckAvailability(Expression<Func<Reservation, bool>> filter)
+        {
+            var query = await _dataSource.GetManyAsync(filter: filter);
+
+            return !query.Any();
+        }
     }
 }
