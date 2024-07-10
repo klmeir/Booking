@@ -2,6 +2,7 @@
 using Booking.Application.Hotels;
 using Booking.Domain.Dtos;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.Api.ApiHandlers.Hotels
 {
@@ -16,6 +17,12 @@ namespace Booking.Api.ApiHandlers.Hotels
             .WithName("GetHotel")
             .Produces(StatusCodes.Status200OK, typeof(HotelDto))
             .Produces(StatusCodes.Status404NotFound);
+
+            routeHandler.MapGet("/search", async (IMediator mediator, [FromQuery] string? City, [FromQuery] int? Guests, [FromQuery] string? CheckInDate, [FromQuery] string? CheckOutDate) =>
+            {
+                return Results.Ok(await mediator.Send(new HotelSearchQuery(City, Guests.Value, CheckInDate, CheckOutDate)));
+            })            
+            .Produces(StatusCodes.Status200OK, typeof(HotelDto));            
 
             routeHandler.MapPost("/", async (IMediator mediator, [Validate] HotelAddCommand hotel) =>
             {                                
