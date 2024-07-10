@@ -5,6 +5,7 @@ using Booking.Api.Filters;
 using Booking.Api.Middleware;
 using Booking.Infrastructure.DataSource;
 using Booking.Infrastructure.Extensions;
+using Booking.Infrastructure.Mailing;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -35,11 +36,14 @@ namespace Booking.Api
                 builder.Services.AddDbContext<DataContext>(opts =>
                 {
                     opts.UseSqlServer(config.GetConnectionString("db"));
-                });            
+                });
+
+                builder.Services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
 
                 // Add services to the container.
                 builder.Services.AddAuthorization();
                 builder.Services.AddDomainServices();
+                builder.Services.AddApplicationServices();
 
                 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
                 builder.Services.AddEndpointsApiExplorer();
