@@ -15,9 +15,12 @@ namespace Booking.Infrastructure.Adapters
 
         public async Task<Reservation> SaveReservation(Reservation r) => await _dataSource.AddAsync(r);
 
+        public async Task<IEnumerable<Reservation>> AllReservation() => 
+            await _dataSource.GetManyAsync(includeStringProperties: $"{nameof(Reservation.Hotel)},{nameof(Reservation.Room)},{nameof(Reservation.Guests)}", orderBy: q => q.OrderBy(r => r.CheckInDate));
+
         public async Task<Reservation> SingleReservation(int id)
         {            
-            var query = await _dataSource.GetManyAsync(filter: r => r.Id == id, includeStringProperties: nameof(Reservation.Guests));
+            var query = await _dataSource.GetManyAsync(filter: r => r.Id == id, includeStringProperties: $"{nameof(Reservation.Hotel)},{nameof(Reservation.Room)},{nameof(Reservation.Guests)}");
 
             return query.FirstOrDefault();
         }

@@ -11,6 +11,8 @@
         public string EmergencyContactName { get; set; }
         public string EmergencyContactPhone { get; set; }
 
+        public virtual Hotel Hotel { get; set; }
+        public virtual Room Room { get; set; }
         public virtual ICollection<Guest> Guests { get; set; } = new List<Guest>();
 
         public Reservation()

@@ -23,7 +23,7 @@ namespace Booking.Infrastructure.DataSource.ModelConfig
 
             builder
                 .HasMany(h => h.Reservations)
-                .WithOne()
+                .WithOne(r => r.Room)
                 .HasForeignKey(r => r.HotelId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
