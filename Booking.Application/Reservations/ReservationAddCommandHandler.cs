@@ -26,7 +26,7 @@ namespace Booking.Application.Reservations
                 new Reservation(request.HotelId, request.RoomId, checkInDate, checkOutDate, request.GuestCount, request.EmergencyContactName, request.EmergencyContactPhone,
                 request.Guests.Select(g => new Guest(g.Name, DateOnly.ParseExact(g.Birthdate, DateFormat, CultureInfo.InvariantCulture), g.Gender, g.DocumentType, g.DocumentNumber, g.Email, g.Phone)).ToList()), cancellationToken);
 
-            return new ReservationDto(reservationSaved.Id, reservationSaved.HotelId, reservationSaved.RoomId, reservationSaved.CheckInDate.ToString(DateFormat), reservationSaved.CheckOutDate.ToString(DateFormat), reservationSaved.GuestCount, reservationSaved.EmergencyContactName, reservationSaved.EmergencyContactPhone,
+            return new ReservationDto(reservationSaved.Id, reservationSaved.HotelId, reservationSaved.Hotel.Name, reservationSaved.RoomId, reservationSaved.Room.Location, reservationSaved.CheckInDate.ToString(DateFormat), reservationSaved.CheckOutDate.ToString(DateFormat), reservationSaved.GuestCount, reservationSaved.EmergencyContactName, reservationSaved.EmergencyContactPhone,
                 reservationSaved.Guests.Select(g => new GuestDto(g.Name, g.Birthdate.ToString(DateFormat), g.Gender, g.DocumentType, g.DocumentNumber, g.Email, g.Phone)).ToList());
         }
     }

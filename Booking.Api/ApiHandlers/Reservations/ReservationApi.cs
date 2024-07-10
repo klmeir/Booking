@@ -8,6 +8,12 @@ namespace Booking.Api.ApiHandlers.Reservations
     public static class ReservationApi
     {
         public static RouteGroupBuilder MapReservations(this IEndpointRouteBuilder routeHandler){
+            routeHandler.MapGet("/", async (IMediator mediator) =>
+            {
+                return Results.Ok(await mediator.Send(new ReservationsQuery()));
+            })            
+            .Produces(StatusCodes.Status200OK, typeof(List<ReservationDto>));
+
             routeHandler.MapGet("/{id}", async (IMediator mediator, int id) =>
             {
                 return Results.Ok(await mediator.Send(new ReservationQuery(id)));

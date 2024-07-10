@@ -27,6 +27,13 @@ namespace Booking.Domain.Services
             return returnReservation;
         }
 
+        public async Task<IEnumerable<Reservation>> AllReservationAsync(CancellationToken? cancellationToken = null)
+        {
+            var token = cancellationToken ?? new CancellationTokenSource().Token;
+
+            return await _reservationRepository.AllReservation();
+        }
+
         public async Task<Reservation> SingleReservationAsync(int id, CancellationToken? cancellationToken = null)
         {
             var token = cancellationToken ?? new CancellationTokenSource().Token;
