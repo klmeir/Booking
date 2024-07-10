@@ -40,5 +40,13 @@ namespace Booking.Domain.Services
 
             return r;
         }
+
+        public async Task CheckIfExistsRoomAsync(int id, CancellationToken? cancellationToken = null)
+        {
+            var room = await _roomRepository.SingleRoom(id);
+
+            if (room is null)
+                throw new CoreBusinessException("The specified room could not be found");
+        }
     }
 }

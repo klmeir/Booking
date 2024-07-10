@@ -30,7 +30,7 @@ namespace Booking.Domain.Services
 
         public async Task CheckIfExistsHotelAsync(int id, CancellationToken? cancellationToken = null)
         {
-            var hotel = await this.SingleHotelAsync(id, cancellationToken);
+            var hotel = await _hotelRepository.SingleHotel(id);
 
             if (hotel is null)
                 throw new CoreBusinessException("The specified hotel could not be found");
