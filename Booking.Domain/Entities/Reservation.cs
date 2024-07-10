@@ -17,8 +17,9 @@
         {
         }
 
-        public Reservation(int roomId, DateOnly checkInDate, DateOnly checkOutDate, int guestCount, string emergencyContactName, string emergencyContactPhone, List<Guest> guests)
-        {            
+        public Reservation(int hotelId, int roomId, DateOnly checkInDate, DateOnly checkOutDate, int guestCount, string emergencyContactName, string emergencyContactPhone, List<Guest> guests)
+        {         
+            HotelId = hotelId;
             RoomId = roomId;
             CheckInDate = checkInDate;
             CheckOutDate = checkOutDate;
