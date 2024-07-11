@@ -47,12 +47,12 @@ namespace Booking.Infrastructure.DataSource
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             if (!roleManager.Roles.Any())
             {
-                var result1 = roleManager.CreateAsync(new ApplicationRole
+                var result1 = roleManager.CreateAsync(new IdentityRole
                 {
                     Name = rolAgency,
                 }).Result;
 
-                var result2 = roleManager.CreateAsync(new ApplicationRole
+                var result2 = roleManager.CreateAsync(new IdentityRole
                 {
                     Name = rolTraveler,
                 }).Result;

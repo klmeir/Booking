@@ -54,6 +54,8 @@ namespace Booking.Api
 
                 var app = builder.Build();
 
+                ContextInitialize.Seed(app.Services);
+
                 app.UseSerilogRequestLogging();
 
                 // Configure the HTTP request pipeline.
