@@ -1,4 +1,5 @@
-﻿using Booking.Infrastructure.DataSource.Auth;
+﻿using Booking.Application.Auth;
+using Booking.Infrastructure.DataSource.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,8 +39,8 @@ namespace Booking.Infrastructure.DataSource
         private static void SeedUsers(IServiceProvider serviceProvider)
         {
             var logger = serviceProvider.GetRequiredService<ILogger<ContextInitialize>>();
-            var rolAgency = "agency";
-            var rolTraveler = "traveler";
+            var rolAgency = RoleEnum.Agency.ToString();
+            var rolTraveler = RoleEnum.Traveler.ToString();
             var emailAgency = "agency.admin@booking.com";
             var emailGuest = "guest1@gmail.com";
 
