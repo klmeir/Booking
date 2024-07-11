@@ -1,4 +1,5 @@
 ﻿using Booking.Api.Filters;
+using Booking.Application.Auth;
 using Booking.Application.Hotels;
 using Booking.Domain.Dtos;
 using MediatR;
@@ -16,13 +17,15 @@ namespace Booking.Api.ApiHandlers.Hotels
             })
             .WithName("GetHotel")
             .Produces(StatusCodes.Status200OK, typeof(HotelDto))
-            .Produces(StatusCodes.Status404NotFound);
+            .Produces(StatusCodes.Status404NotFound)
+            .RequireAuthorization(PolicyEnum.AgencyPolicy.ToString());
 
             routeHandler.MapGet("/search", async (IMediator mediator, [FromQuery] string? City, [FromQuery] int? Guests, [FromQuery] string? CheckInDate, [FromQuery] string? CheckOutDate) =>
             {
                 return Results.Ok(await mediator.Send(new HotelSearchQuery(City, Guests.Value, CheckInDate, CheckOutDate)));
             })            
-            .Produces(StatusCodes.Status200OK, typeof(HotelDto));            
+            .Produces(StatusCodes.Status200OK, typeof(HotelDto))
+            .RequireAuthorization(PolicyEnum.AgencyOrTravelerPolicy.ToString());            
 
             routeHandler.MapPost("/", async (IMediator mediator, [Validate] HotelAddCommand hotel) =>
             {                                
@@ -30,7 +33,8 @@ namespace Booking.Api.ApiHandlers.Hotels
                 return Results.CreatedAtRoute("GetHotel", new { id = savedHotel.Id }, savedHotel);                
             })
             .Produces(StatusCodes.Status201Created, typeof(HotelDto))
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status400BadRequest)
+            .RequireAuthorization(PolicyEnum.AgencyPolicy.ToString());
 
             routeHandler.MapPut("/{id}", async (IMediator mediator, int id, [Validate] HotelUpdateCommand hotel) =>
             {
@@ -38,7 +42,8 @@ namespace Booking.Api.ApiHandlers.Hotels
                 return Results.Ok(await mediator.Send(hotel));
             })
             .Produces(StatusCodes.Status200OK, typeof(HotelDto))
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status400BadRequest)
+            .RequireAuthorization(PolicyEnum.AgencyPolicy.ToString());
 
             return (RouteGroupBuilder)routeHandler;
         }

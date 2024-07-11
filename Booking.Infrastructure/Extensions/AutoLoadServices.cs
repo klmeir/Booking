@@ -3,7 +3,6 @@ using Booking.Domain.Ports;
 using Booking.Domain.Services;
 using Booking.Infrastructure.Adapters;
 using Booking.Infrastructure.Ports;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Booking.Infrastructure.Extensions
