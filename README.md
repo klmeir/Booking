@@ -27,13 +27,13 @@ Solution for VisualStudio(.sln) composed of the following folders :
 - Domain : Entities, Value Objects, Ports, Domain Services, Aggregates
 - Function : Message reading function
 
-## Build & Run
+# Build & Run
 
-# Visual Studio 2022
+## Visual Studio 2022
 
 To run the project open the solution in visual studio, check the database connection string and run.
 
-# Docker and Docker Compose
+## Docker and Docker Compose
 
 The execution of docker compose from visual studio is functional, at the moment we are working to execute it from command line...
 
