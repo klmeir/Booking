@@ -1,5 +1,11 @@
 # Booking API with .NET
 
+## Collection
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/17436300-f78a841a-6ece-4f6f-b4e7-342b5f1b1f4f?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D17436300-f78a841a-6ece-4f6f-b4e7-342b5f1b1f4f%26entityType%3Dcollection%26workspaceId%3D8dceb780-7c6a-44a3-bba7-90c59549f93b)
+
+## Swagger
+https://nitro-booking.azurewebsites.net/swagger/index.html
+
 # The main architectural patterns and styles that guide this solution are
 
 - Port and Adapter Architecture
