@@ -32,7 +32,7 @@ namespace Booking.Api.Middleware
 
                 context.Response.ContentType = ContentType.ApplicationJson.ToString();
                 context.Response.StatusCode =
-                    (ex is CoreBusinessException) ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.InternalServerError;
+                     (ex is NotFoundException) ? (int)HttpStatusCode.NotFound : (ex is CoreBusinessException) ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.InternalServerError;
                 await context.Response.WriteAsync(result);
             }
         }

@@ -1,4 +1,6 @@
-﻿using Booking.Domain.Services;
+﻿using Booking.Application.Ports;
+using Booking.Domain.Ports;
+using Booking.Domain.Services;
 using Booking.Infrastructure.Adapters;
 using Booking.Infrastructure.Ports;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +12,10 @@ namespace Booking.Infrastructure.Extensions
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
             // generic repository
-            services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));            
+            services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
+
+            // unit of work
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             // all services with domain service attribute, we can also do this "by convention",
             // naming services with suffix "Service" if decide to remove the domain service decorator
@@ -43,6 +48,14 @@ namespace Booking.Infrastructure.Extensions
                 Type iface = repo.GetInterfaces().Single();
                 services.AddTransient(iface, repo);
             }
+
+            return services;
+        }
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {            
+            // Email Service            
+            services.AddTransient<IEmailService, SmtpEmailService>();
 
             return services;
         }
