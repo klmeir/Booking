@@ -1,4 +1,5 @@
 ﻿using Booking.Api.Filters;
+using Booking.Application.Auth;
 using Booking.Application.Reservations;
 using Booking.Domain.Dtos;
 using MediatR;
@@ -12,7 +13,8 @@ namespace Booking.Api.ApiHandlers.Reservations
             {
                 return Results.Ok(await mediator.Send(new ReservationsQuery()));
             })            
-            .Produces(StatusCodes.Status200OK, typeof(List<ReservationDto>));
+            .Produces(StatusCodes.Status200OK, typeof(List<ReservationDto>))
+            .RequireAuthorization(PolicyEnum.AgencyPolicy.ToString());
 
             routeHandler.MapGet("/{id}", async (IMediator mediator, int id) =>
             {
@@ -20,7 +22,8 @@ namespace Booking.Api.ApiHandlers.Reservations
             })
             .WithName("GetReservation")
             .Produces(StatusCodes.Status200OK, typeof(ReservationDto))
-            .Produces(StatusCodes.Status404NotFound);
+            .Produces(StatusCodes.Status404NotFound)
+            .RequireAuthorization(PolicyEnum.AgencyOrTravelerPolicy.ToString()); ;
 
             routeHandler.MapPost("/", async (IMediator mediator, [Validate] ReservationAddCommand reservation) =>
             {
@@ -28,7 +31,8 @@ namespace Booking.Api.ApiHandlers.Reservations
                 return Results.CreatedAtRoute("GetReservation", new { id = savedReservation.Id }, savedReservation);
             })
             .Produces(StatusCodes.Status201Created, typeof(ReservationDto))
-            .Produces(StatusCodes.Status400BadRequest);            
+            .Produces(StatusCodes.Status400BadRequest)
+            .RequireAuthorization(PolicyEnum.TravelerPolicy.ToString());       
 
             return (RouteGroupBuilder)routeHandler;
         }

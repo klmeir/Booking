@@ -1,4 +1,5 @@
-﻿using Booking.Application.Ports;
+﻿using Booking.Application.Auth;
+using Booking.Application.Ports;
 using Booking.Infrastructure.Adapters;
 using Booking.Infrastructure.Auth;
 using Booking.Infrastructure.DataSource;
@@ -17,12 +18,15 @@ namespace Booking.Infrastructure.Extensions
         public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthorizationBuilder()
-                 .AddPolicy("agency_policy", policy =>
+                .AddPolicy(PolicyEnum.AgencyOrTravelerPolicy.ToString(), policy =>
                        policy
-                           .RequireRole("agency"))
-                 .AddPolicy("traveler_policy", policy =>
+                           .RequireRole(RoleEnum.Agency.ToString(), RoleEnum.Traveler.ToString()))
+                 .AddPolicy(PolicyEnum.AgencyPolicy.ToString(), policy =>
                        policy
-                           .RequireRole("traveler"));
+                           .RequireRole(RoleEnum.Agency.ToString()))
+                 .AddPolicy(PolicyEnum.TravelerPolicy.ToString(), policy =>
+                       policy
+                           .RequireRole(RoleEnum.Traveler.ToString()));
 
             services.AddCors(options =>
             {
