@@ -9,6 +9,7 @@ using Booking.Infrastructure.Mailing;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
 
@@ -48,7 +49,32 @@ namespace Booking.Api
 
                 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
                 builder.Services.AddEndpointsApiExplorer();
-                builder.Services.AddSwaggerGen();
+                builder.Services.AddSwaggerGen(c=> {
+                    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                                    {
+                                        Name = "Authorization",
+                                        Type = SecuritySchemeType.Http,
+                                        Scheme = "Bearer",
+                                        BearerFormat = "JWT",
+                                        In = ParameterLocation.Header,
+                                        Description = "JWT Authorization header whith Bearer."
+                                    });
+
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
+                        }
+                    });
+                });
 
                 builder.Services.AddMediatR(Assembly.Load("Booking.Application"), typeof(Program).Assembly);                
 
