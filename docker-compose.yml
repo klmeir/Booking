@@ -1,0 +1,21 @@
+services:
+  booking.api:
+    container_name: booking.api
+    image: ${DOCKER_REGISTRY-}bookingapi
+    build:
+      context: .
+      dockerfile: Booking.Api/Dockerfile
+    environment:
+      - ConnectionStrings__db=Server=db1;User Id=sa;Password=<YourStrong!Passw0rd>;Database=BookingDB;Encrypt=False;TrustServerCertificate=True
+    ports:
+      - "8000:8080"
+    depends_on:
+      - db1
+  db1:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    environment:
+      MSSQL_SA_PASSWORD: "<YourStrong!Passw0rd>"
+      MSSQL_PID: "Express"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
