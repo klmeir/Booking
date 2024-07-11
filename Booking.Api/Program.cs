@@ -38,9 +38,10 @@ namespace Booking.Api
                     opts.UseSqlServer(config.GetConnectionString("db"));
                 });
 
-                builder.Services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
+                builder.Services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));                
 
-                // Add services to the container.
+                // Add services to the container.                
+                builder.Services.AddAuthentication(config);
                 builder.Services.AddAuthorization();
                 builder.Services.AddDomainServices();
                 builder.Services.AddApplicationServices();
@@ -53,8 +54,6 @@ namespace Booking.Api
 
                 var app = builder.Build();
 
-                ContextInitialize.Seed(app.Services);
-
                 app.UseSerilogRequestLogging();
 
                 // Configure the HTTP request pipeline.
@@ -62,12 +61,15 @@ namespace Booking.Api
                 {
                     app.UseSwagger();
                     app.UseSwaggerUI();
-                }            
+                }
 
+                app.UseCors("CorsPolicy");
+                app.UseAuthentication();
                 app.UseAuthorization();
 
                 app.UseMiddleware<AppExceptionHandlerMiddleware>();
 
+                app.MapGroup("/api/auth").MapAuth().AddEndpointFilterFactory(ValidationFilter.ValidationFilterFactory);
                 app.MapGroup("/api/hotels").MapHotels().AddEndpointFilterFactory(ValidationFilter.ValidationFilterFactory);
                 app.MapGroup("/api/rooms").MapRooms().AddEndpointFilterFactory(ValidationFilter.ValidationFilterFactory);
                 app.MapGroup("/api/reservations").MapReservations().AddEndpointFilterFactory(ValidationFilter.ValidationFilterFactory);
