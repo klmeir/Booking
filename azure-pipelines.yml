@@ -1,0 +1,49 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  solution: '**/*.sln'
+  outputDirectory: '$(Build.ArtifactStagingDirectory)/output'
+
+jobs:
+- job: Build
+  displayName: 'Build and Test .NET 8 Application'
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '8.x'
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - script: |
+      dotnet restore $(solution)
+    displayName: 'Restore NuGet packages'
+
+  - script: |
+      dotnet build $(solution) --configuration $(buildConfiguration) --no-restore
+    displayName: 'Build the solution'
+
+  - script: |
+      dotnet test $(solution) --configuration $(buildConfiguration) --no-build --verbosity normal
+    displayName: 'Run unit tests'
+
+  - task: CopyFiles@2
+    inputs:
+      contents: '**/bin/$(buildConfiguration)/**'
+      targetFolder: '$(outputDirectory)'
+    displayName: 'Copy build artifacts'
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(outputDirectory)'
+      artifact: 'drop'
+    displayName: 'Publish artifacts'
