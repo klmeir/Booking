@@ -1,0 +1,44 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET 8 CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up .NET 8 SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.x'
+
+    - name: Restore dependencies
+      run: dotnet restore ./Booking.Api/Booking.Api.csproj
+
+    - name: Build
+      run: dotnet build ./Booking.Api/Booking.Api.csproj --configuration Release --no-restore
+
+    #- name: Run tests
+    #  run: dotnet test --configuration Release --no-build --verbosity normal
+
+    - name: Publish artifacts
+      run: |
+        dotnet publish ./Booking.Api/Booking.Api.csproj -c Release -o ./publish
+    # Make the publish directory an artifact
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: drop
+        path: ./publish
