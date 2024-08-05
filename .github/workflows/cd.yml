@@ -1,0 +1,28 @@
+name: .NET 8 CD
+
+on:
+  workflow_run:
+    workflows: [".NET 8 CI"]
+    types:
+      - completed
+
+env:
+  AZURE_WEBAPP_NAME: nitro-booking-api
+  AZURE_WEBAPP_PACKAGE_PATH: "./drop"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download artifact from CI
+      uses: actions/download-artifact@v3
+      with:
+        name: drop
+
+    - name: Deploy to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
