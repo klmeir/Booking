@@ -6,6 +6,19 @@
 ## Swagger
 https://nitro-booking.azurewebsites.net/swagger/index.html
 
+## Database schema
+
+<img src="https://github.com/klmeir/booking/blob/master/docs/ER.png" />
+
+## Continuous integration
+
+<img src="https://github.com/klmeir/booking/blob/master/docs/CI.png" />
+
+## Continuous deployment
+
+<img src="https://github.com/klmeir/booking/blob/master/docs/CD.png" />
+<img src="https://github.com/klmeir/booking/blob/master/docs/CI-CD.png" />
+
 # The main architectural patterns and styles that guide this solution are
 
 - Port and Adapter Architecture
@@ -22,6 +35,8 @@ https://nitro-booking.azurewebsites.net/swagger/index.html
 - Global Exception Handler
 - Logs : Console
 - Swagger
+- Unit tests
+- CI/CD
 
 ### Project structure:
 
