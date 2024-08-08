@@ -48,7 +48,7 @@ Solution for VisualStudio(.sln) composed of the following folders :
 - Application : Domain Services Orchestration Layer; Ports, Commands, Queries, Handlers
 - Infrastructure : Adapters
 - Domain : Entities, Value Objects, Ports, Domain Services, Aggregates
-- Function : Message reading function
+- Domain.Tests : Unit Tests para Domain Services
 
 # Build & Run
 
