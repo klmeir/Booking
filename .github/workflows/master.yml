@@ -27,6 +27,9 @@ jobs:
       - name: Build with dotnet
         run: dotnet build ./Booking.Api/Booking.Api.csproj --configuration Release
 
+      - name: Run tests
+        run: dotnet test ./Booking.Domain.Tests/Booking.Domain.Tests.csproj --configuration Release
+
       - name: dotnet publish
         run: dotnet publish ./Booking.Api/Booking.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
