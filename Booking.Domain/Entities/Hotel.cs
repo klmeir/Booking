@@ -9,7 +9,11 @@
         public decimal Commission { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
-        public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();   
+        public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+        public Hotel()
+        {
+        }
 
         public Hotel(string name, string description, string city, string address, decimal commission)
         {
