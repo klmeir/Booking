@@ -15,6 +15,10 @@ namespace Booking.Domain.Entities
         public virtual Hotel Hotel { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
+        public Room()
+        {
+        }
+
         public Room(int hotelId, decimal baseCost, decimal taxes, RoomTypeEnum roomType, int maxGuests, string location)
         {
             HotelId = hotelId;
